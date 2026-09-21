@@ -1,0 +1,441 @@
+:root {
+  /* Variables globales del color y la tipografía del sistema visual. */
+  color-scheme: light;
+  --ink: #202b2b;
+  --muted: #6c7774;
+  --paper: #f5f3ed;
+  --panel: #fffefa;
+  --teal: #087e77;
+  --coral: #e26d52;
+  --line: #d9dfd9;
+}
+
+/* Reseteo base y tipografía general para que la interfaz se vea consistente. */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor principal que limita el ancho del contenido y centra el layout. */
+.shell {
+  width: min(960px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 18px 0 12px;
+}
+
+/* Cabecera principal de la aplicación: nombre, branding y estado de red. */
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+.masthead > div,
+.panel-heading > div {
+  min-width: 0;
+}
+.kicker, .eyebrow {
+  color: var(--teal);
+  font: 700 12px/1.2 Arial, sans-serif;
+  letter-spacing: 1.8px;
+  margin: 0 0 12px;
+}
+h1 {
+  font-size: clamp(42px, 7vw, 64px);
+  line-height: .82;
+  letter-spacing: -2px;
+  margin: 0;
+  font-weight: 700;
+  font-family: Georgia, "Times New Roman", serif;
+}
+h1 em {
+  color: var(--coral);
+  font-weight: 400;
+}
+.status {
+  align-items: center;
+  background: rgba(8, 126, 119, 0.08);
+  border: 1px solid rgba(8, 126, 119, 0.15);
+  border-radius: 999px;
+  color: var(--muted);
+  display: inline-flex;
+  font: 700 12px Arial, sans-serif;
+  letter-spacing: 0.08em;
+  margin: 12px 0;
+  padding: 8px 12px;
+  text-transform: uppercase;
+}
+.status span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #36a269;
+  border-radius: 50%;
+  margin-right: 7px;
+}
+
+/* Sección introductoria y panel del formulario para seleccionar origen y destino. */
+.intro {
+  border-bottom: 1px solid var(--line);
+  margin: 18px 0 14px;
+  padding-bottom: 12px;
+}
+.intro p {
+  color: var(--muted);
+  font: 500 16px/1.45 "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+}
+.planner-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(245,243,237,0.98));
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: clamp(20px, 3vw, 28px);
+  box-shadow: 0 10px 22px rgba(32, 43, 43, 0.07), 5px 5px 0 rgba(8, 126, 119, .08);
+}
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+h2 {
+  font-size: clamp(25px, 4vw, 32px);
+  line-height: 1.1;
+  margin: 0 0 20px;
+  font-weight: 600;
+  font-family: Georgia, "Times New Roman", serif;
+}
+.route-mark {
+  color: var(--coral);
+  font: 700 21px Arial, sans-serif;
+  flex: 0 1 auto;
+  text-align: right;
+}
+.route-mark span {
+  color: var(--teal);
+  margin: 0 8px;
+}
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+label {
+  color: var(--muted);
+  display: grid;
+  gap: 8px;
+  font: 700 12px Arial, sans-serif;
+  letter-spacing: .7px;
+  text-transform: uppercase;
+}
+select {
+  appearance: none;
+  background: #f7f7f2;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font: 16px Georgia, serif;
+  padding: 12px 13px;
+  width: 100%;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font: 13px Arial, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.check input {
+  accent-color: var(--teal);
+  height: 16px;
+  width: 16px;
+}
+button {
+  background: linear-gradient(180deg, #0a8c86 0%, #066963 100%);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 10px 18px rgba(8, 126, 119, 0.23);
+  color: white;
+  cursor: pointer;
+  font: 700 14px Arial, sans-serif;
+  letter-spacing: 0.04em;
+  padding: 12px 17px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+button:hover {
+  background: #066963;
+  box-shadow: 0 12px 20px rgba(8, 126, 119, 0.28);
+  transform: translateY(-1px);
+}
+
+/* Estados del resultado: vacío y ruta ya calculada. */
+.result {
+  margin-top: 16px;
+}
+.empty {
+  border: 1px dashed #bccbc5;
+  border-radius: 14px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px 18px;
+  font: 500 14px/1.5 "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.empty p { margin: 0; }
+.empty-icon { color: var(--coral); font-size: 27px; }
+.route-result {
+  background: var(--ink);
+  color: white;
+  padding: clamp(20px, 3vw, 24px);
+  overflow-wrap: anywhere;
+}
+.route-result h3 {
+  font: 400 24px Georgia, serif;
+  margin: 0;
+}
+.route-result .total {
+  color: #a7d9d2;
+  font: 700 13px Arial, sans-serif;
+  letter-spacing: 1px;
+  margin: 5px 0 18px;
+  text-transform: uppercase;
+}
+
+/* Línea temporal de la ruta principal: cada stop representa una parada del recorrido. */
+.timeline { display: grid; gap: 0; }
+.stop {
+  border-left: 2px solid var(--coral);
+  min-height: 48px;
+  padding: 0 0 18px 22px;
+  position: relative;
+}
+.stop::before {
+  background: var(--coral);
+  border: 4px solid var(--ink);
+  border-radius: 50%;
+  content: "";
+  height: 10px;
+  left: -8px;
+  position: absolute;
+  top: 0;
+  width: 10px;
+}
+.stop:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+.stop-name {
+  display: block;
+  font: 17px Georgia, serif;
+}
+.segment {
+  color: #a7d9d2;
+  display: block;
+  font: 12px Arial, sans-serif;
+  margin-top: 5px;
+}
+
+/* Tarjetas de comparación entre rutas alternativas. */
+.comparison {
+  border-top: 1px solid rgba(255,255,255,.18);
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr));
+  margin-top: 22px;
+  padding-top: 18px;
+}
+.comparison h4 {
+  color: #a7d9d2;
+  font: 700 12px Arial, sans-serif;
+  letter-spacing: 1px;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+}
+.comparison-note {
+  color: #c5d4d0;
+  font: 12px Arial, sans-serif;
+  margin: -4px 0 12px;
+}
+.comparison-card {
+  border: 1px solid rgba(255,255,255,.16);
+  margin-top: 8px;
+  padding: 12px 14px;
+  border-top: 3px solid var(--route-color);
+}
+.comparison-card.best { border-color: var(--route-color); }
+.comparison-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font: 13px Arial, sans-serif;
+}
+.comparison-top strong {
+  align-items: center;
+  color: var(--route-color);
+  display: flex;
+  gap: 8px;
+}
+.route-color {
+  background: var(--route-color);
+  border-radius: 50%;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+}
+.comparison-top span {
+  color: white;
+  font-weight: 700;
+}
+.comparison-card p {
+  color: #c5d4d0;
+  font: 12px Arial, sans-serif;
+  margin: 8px 0 10px;
+  overflow-wrap: anywhere;
+}
+.alternative-timeline {
+  list-style: none;
+  margin: 16px 0;
+  padding: 0;
+}
+.alternative-timeline li {
+  border-left: 2px solid var(--route-color);
+  margin-left: 5px;
+  padding: 0 0 12px 14px;
+  position: relative;
+}
+.alternative-timeline li:last-child {
+  border-left-color: transparent;
+  padding-bottom: 0;
+}
+.alternative-timeline li::before {
+  background: var(--route-color);
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  content: "";
+  height: 8px;
+  left: -7px;
+  position: absolute;
+  top: 0;
+  width: 8px;
+}
+.alternative-timeline strong, .alternative-timeline span { display: block; }
+.alternative-timeline strong {
+  color: white;
+  font: 14px Georgia, serif;
+}
+.alternative-timeline span {
+  color: #a7d9d2;
+  font: 11px Arial, sans-serif;
+  margin-top: 4px;
+}
+.comparison-bar {
+  background: rgba(255,255,255,.12);
+  height: 6px;
+}
+.comparison-bar i {
+  background: var(--route-color);
+  display: block;
+  height: 100%;
+}
+.comparison h4 { grid-column: 1 / -1; }
+.error {
+  animation: alert-in 0.2s ease-out;
+  background: linear-gradient(135deg, #fff0ed 0%, #ffe0d8 100%);
+  border: 1px solid #efb0a2;
+  border-left: 6px solid #b4452a;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(180, 69, 42, 0.16);
+  color: #7f2c1f;
+  font: 700 14px/1.5 Arial, sans-serif;
+  margin: 22px 0 0;
+  padding: 14px 16px;
+  position: relative;
+  text-align: left;
+}
+
+.error::before {
+  content: "⚠";
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+@keyframes alert-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pie de página con información del proyecto y del autor. */
+footer {
+  color: var(--muted);
+  font: 11px Arial, sans-serif;
+  letter-spacing: .5px;
+  margin-top: 16px;
+  text-align: center;
+}
+.site-footer p { margin: 5px 0; }
+.site-footer strong { color: var(--teal); }
+
+/* Reorganiza los bloques antes de que el contenido quede demasiado comprimido. */
+@media (max-width: 780px) {
+  .panel-heading {
+    flex-wrap: wrap;
+  }
+  .route-mark {
+    margin-top: -10px;
+    text-align: left;
+  }
+  .actions {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+  .check {
+    flex: 1 1 260px;
+  }
+  button {
+    flex: 1 1 220px;
+  }
+}
+
+/* Ajustes responsive para pantallas pequeñas. */
+@media (max-width: 650px) {
+  .shell {
+    padding-top: 16px;
+    width: min(100% - 28px, 560px);
+  }
+  .masthead { display: block; }
+  .status { margin-top: 22px; }
+  .fields { grid-template-columns: 1fr; }
+  .actions {
+    flex-direction: column;
+  }
+  .check,
+  button {
+    flex-basis: auto;
+    width: 100%;
+  }
+  .planner-panel { padding: 22px 18px; }
+  .intro { margin-top: 18px; }
+  .intro p { font-size: 16px; }
+  .route-result h3 { font-size: 24px; }
+  .comparison { margin-top: 24px; }
+  footer { line-height: 1.5; }
+}

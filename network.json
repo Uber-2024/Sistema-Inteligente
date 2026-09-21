@@ -1,0 +1,33 @@
+{
+  "_descripcion": {
+    "titulo": "Red de ejemplo de Ruta Inteligente",
+    "objetivo": "Definir una red de transporte local con estaciones y conexiones para probar el algoritmo de rutas y la comparación de alternativas.",
+    "nota": "Este archivo contiene datos de ejemplo. JSON no admite comentarios nativos, por eso se usa una clave de metadatos para documentar la estructura y el uso de cada bloque.",
+    "estructura": {
+      "stations": "Lista de estaciones disponibles. Cada elemento contiene el nombre de la estación y, opcionalmente, si es accesible.",
+      "connections": "Lista de tramos entre dos estaciones. Cada conexión incluye origen, destino, tiempo en minutos, línea y si es accesible."
+    }
+  },
+  "stations": [
+    {"name": "Terminal Norte"},
+    {"name": "Centro Historico"},
+    {"name": "Universidad"},
+    {"name": "Hospital Central", "accessible": true},
+    {"name": "Terminal Sur"},
+    {"name": "Aeropuerto", "accessible": true}
+  ],
+  "connections": [
+    {"origin": "Terminal Norte", "destination": "Centro Historico", "minutes": 8, "line": "Metro Azul"},
+    {"origin": "Centro Historico", "destination": "Terminal Norte", "minutes": 8, "line": "Metro Azul"},
+    {"origin": "Centro Historico", "destination": "Universidad", "minutes": 6, "line": "Metro Azul"},
+    {"origin": "Universidad", "destination": "Centro Historico", "minutes": 6, "line": "Metro Azul"},
+    {"origin": "Universidad", "destination": "Hospital Central", "minutes": 7, "line": "Bus 12"},
+    {"origin": "Hospital Central", "destination": "Universidad", "minutes": 7, "line": "Bus 12"},
+    {"origin": "Hospital Central", "destination": "Terminal Sur", "minutes": 9, "line": "Metro Verde"},
+    {"origin": "Terminal Sur", "destination": "Hospital Central", "minutes": 9, "line": "Metro Verde"},
+    {"origin": "Centro Historico", "destination": "Terminal Sur", "minutes": 18, "line": "Bus 5"},
+    {"origin": "Terminal Sur", "destination": "Centro Historico", "minutes": 18, "line": "Bus 5"},
+    {"origin": "Terminal Norte", "destination": "Aeropuerto", "minutes": 25, "line": "Bus A1", "accessible": true},
+    {"origin": "Aeropuerto", "destination": "Terminal Norte", "minutes": 25, "line": "Bus A1", "accessible": true}
+  ]
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<!--
+  Plantilla principal de la interfaz de Ruta Inteligente.
+
+  Esta vista define la estructura visible de la aplicación:
+  - cabecera del sistema
+  - panel del planificador
+  - resultado de la ruta
+  - mensajes de error y pie de página
+
+  La lógica no se implementa aquí, sino en app.js. Esto mantiene una separación
+  clara entre estructura, estilo y comportamiento del frontend.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruta Inteligente</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <!-- Contenedor principal que organiza el contenido de la pantalla. -->
+  <main class="shell">
+    <!-- Encabezado de la aplicación con nombre y estado del sistema. -->
+    <header class="masthead" aria-label="Encabezado de la aplicación">
+      <div>
+        <p class="kicker">SISTEMA DE TRANSPORTE</p>
+        <h1>Ruta<br><em>Inteligente</em></h1>
+      </div>
+      <p class="status"><span></span> Red operativa</p>
+    </header>
+
+    <!-- Introducción breve de la utilidad del planificador. -->
+    <section class="intro" aria-label="Introducción">
+      <p>Consulta la ruta más rápida entre los dos destinos elegidos.</p>
+    </section>
+
+    <!-- Panel principal donde el usuario selecciona origen, destino y opciones. -->
+    <section class="planner-panel" aria-labelledby="planner-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">PLANIFICADOR</p>
+          <h2 id="planner-title">Selecciona tu recorrido</h2>
+        </div>
+        <div class="route-mark">Origen <span>→</span> Destino</div>
+      </div>
+
+      <form id="route-form">
+        <div class="fields">
+          <label>Origen<select id="origin" required></select></label>
+          <label>Destino<select id="destination" required></select></label>
+        </div>
+        <div class="actions">
+          <label class="check">
+            <input id="accessible" type="checkbox">
+            <span>Priorizar conexiones accesibles</span>
+          </label>
+          <button type="submit">Calcular ruta <span>↗</span></button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Área donde se muestra el resultado de la ruta calculada. -->
+    <section id="result" class="result empty" aria-live="polite">
+      <div class="empty-icon">↯</div>
+      <p>Elige un origen y un destino para consultar la mejor ruta disponible.</p>
+    </section>
+
+    <!-- Mensaje de error visible cuando la petición falla. -->
+    <p id="error" class="error" hidden></p>
+
+    <!-- Información final del proyecto. -->
+    <footer class="site-footer" aria-label="Información del proyecto">
+      <p>Ruta Inteligente · desarrollado por <strong>Uber Torres</strong></p>
+      <p>Copyright © 2026 Uber Torres. Todos los derechos reservados.</p>
+      <p>Comparación por tiempo real · Red local gestionada con reglas lógicas</p>
+    </footer>
+  </main>
+
+  <!-- Carga la lógica del cliente de la interfaz. -->
+  <script src="/app.js"></script>
+</body>
+</html>
